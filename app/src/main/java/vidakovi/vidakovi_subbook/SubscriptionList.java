@@ -19,4 +19,8 @@ class SubscriptionList {
         }
         return total;
     }
+
+    public void add(Subscription sub){
+        this.subList.add(sub);
+    }
 }
