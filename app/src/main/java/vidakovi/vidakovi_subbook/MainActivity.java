@@ -3,6 +3,7 @@ package vidakovi.vidakovi_subbook;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Gravity;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
@@ -51,9 +52,21 @@ public class MainActivity extends AppCompatActivity {
             id++;
             buttonToSub.put(button,sub);
             button.setLayoutParams(lpview2);
+            button.setOnClickListener(new View.OnClickListener(){
+                public void onClick(View v){
+                    goToDetails(v);
+                }
+            });
+
             linLayout.addView(button);
         }
 
+
+    }
+
+    public void goToDetails(View v){
+        int id = v.getId();
+        Button button = findViewById(id);
 
     }
 }
