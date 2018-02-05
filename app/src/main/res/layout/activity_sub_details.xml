@@ -122,9 +122,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:ems="10"
+                android:gravity="center"
                 android:hint="Enter a date: yyyy-mm-dd"
-                android:inputType="textPersonName"
-                android:text="Name" />
+                android:inputType="textPersonName" />
         </ViewSwitcher>
 
         <ViewSwitcher
@@ -133,16 +133,18 @@
             android:layout_height="match_parent" >
 
             <TextView
-                android:id="@+id/textView5"
+                android:id="@+id/Comment"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:gravity="center_horizontal"
                 android:text="TextView" />
 
             <EditText
-                android:id="@+id/editText5"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:id="@+id/editComment"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
                 android:ems="10"
+                android:gravity="center"
                 android:hint="Enter a comment"
                 android:inputType="textPersonName" />
         </ViewSwitcher>

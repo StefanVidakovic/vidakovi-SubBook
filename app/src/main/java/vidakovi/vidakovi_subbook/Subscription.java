@@ -7,7 +7,7 @@ class Subscription implements Serializable {
     private String name;
     private String startDate;
     private Double monthlyCharge;
-    private String comment;
+    private String comment = "";
 
     public Subscription(String name,String startDate,String monthlyCharge){
         this.name = name;
