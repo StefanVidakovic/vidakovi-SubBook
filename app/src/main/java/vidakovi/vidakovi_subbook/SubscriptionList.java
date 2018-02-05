@@ -7,6 +7,7 @@ import vidakovi.vidakovi_subbook.Subscription;
 
 class SubscriptionList {
     public ArrayList<Subscription> subList;
+    public int nullIdentifier = 1;
 
     public SubscriptionList(){
         this.subList = new ArrayList<Subscription>();

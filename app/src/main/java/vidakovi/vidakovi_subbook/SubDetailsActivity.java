@@ -17,9 +17,12 @@ import java.util.Map;
 
 public class SubDetailsActivity extends AppCompatActivity {
     public Subscription sub;
+    public boolean addFlag = false;
 //    private ArrayList<TextView> textViews = new ArrayList<TextView>();
     public static final String NEW_SUB = "new sub";
     public static final String OLD_SUB = "old sub";
+    public static final String DELETE_SUB = "delete sub";
+    public static final String ADD_SUB = "add";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -70,6 +73,11 @@ public class SubDetailsActivity extends AppCompatActivity {
                 deleteSub(v);
             }
         });
+        if(intent.hasExtra(MainActivity.ADD_MESSAGE)){
+            editSub(edit);
+            this.addFlag = true;
+            this.sub = new Subscription("name","0000-00-00","0.0");
+        }
     }
 
     public void editSub(View v){
@@ -93,19 +101,19 @@ public class SubDetailsActivity extends AppCompatActivity {
         Button editButton  = (Button) findViewById(R.id.editButton);
         editButton.setEnabled(false);
         EditText editName = (EditText) findViewById(R.id.editName);
-        String oldSubName = this.sub.getName();
+        String oldSubName = null;
+        if(!addFlag) {
+            oldSubName = this.sub.getName();
+        }
         if(!editName.getText().toString().matches("")
                 &&this.sub.checkName(editName.getText().toString())) {
             this.sub.setName(editName.getText().toString());
             TextView name = (TextView) findViewById(R.id.Name);
             name.setText(editName.getText());
             editName.getText().clear();
-//            ViewSwitcher vs1 = (ViewSwitcher) findViewById(R.id.viewSwitcher1);
-//            vs1.showPrevious();
+
         }
-        else if(editName.getText().toString().matches("")){
-            flag1 = true;
-        }
+
         else{
             flag1 = false;
         }
@@ -118,12 +126,9 @@ public class SubDetailsActivity extends AppCompatActivity {
             TextView charge = (TextView) findViewById(R.id.Charge);
             charge.setText(editCharge.getText());
             editCharge.getText().clear();
-//            ViewSwitcher vs2 = (ViewSwitcher) findViewById(R.id.viewSwitcher2);
-//            vs2.showPrevious();
+
         }
-        else if(editCharge.getText().toString().matches("")){
-            flag2 = true;
-        }
+
         else{
             flag2 = false;
         }
@@ -135,12 +140,9 @@ public class SubDetailsActivity extends AppCompatActivity {
             TextView date = (TextView) findViewById(R.id.Date);
             date.setText(editDate.getText());
             editDate.getText().clear();
-//            ViewSwitcher vs3 = (ViewSwitcher) findViewById(R.id.viewSwitcher3);
-//            vs3.showPrevious();
+
         }
-        else if(editDate.getText().toString().matches("")){
-            flag3 = true;
-        }
+
         else{
             flag3 = false;
         }
@@ -151,8 +153,7 @@ public class SubDetailsActivity extends AppCompatActivity {
             TextView comment = (TextView) findViewById(R.id.Comment);
             comment.setText(editComment.getText());
             editComment.getText().clear();
-//            ViewSwitcher vs4 = (ViewSwitcher) findViewById(R.id.viewSwitcher4);
-//            vs4.showPrevious();
+
         }
         else if(editComment.getText().toString().matches("")){
             flag4 = true;
@@ -160,11 +161,19 @@ public class SubDetailsActivity extends AppCompatActivity {
         else{
             flag4 = false;
         }
-        if(flag1&&flag2&&flag3&&flag4) {
+        if(flag1&&flag2&&flag3&&flag4&&!addFlag) {
             editButton.setEnabled(true);
             Intent intent = new Intent(this,MainActivity.class);
             intent.putExtra(OLD_SUB,oldSubName);
             intent.putExtra(NEW_SUB,this.sub);
+            startActivity(intent);
+        }
+        if(flag1&&flag2&&flag3&&flag4&&addFlag){
+            this.addFlag = false;
+            editButton.setEnabled(true);
+            Intent intent = new Intent(this,MainActivity.class);
+            intent.putExtra(NEW_SUB,this.sub);
+            intent.putExtra(ADD_SUB,"add");
             startActivity(intent);
         }
     }
@@ -197,7 +206,9 @@ public class SubDetailsActivity extends AppCompatActivity {
     }
 
     public void deleteSub(View v){
-        
+        Intent intent = new Intent(this,MainActivity.class);
+        intent.putExtra(DELETE_SUB,this.sub.getName());
+        startActivity(intent);
     }
 
 }
