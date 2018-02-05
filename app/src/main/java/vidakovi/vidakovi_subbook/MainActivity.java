@@ -1,5 +1,6 @@
 package vidakovi.vidakovi_subbook;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Gravity;
@@ -12,6 +13,7 @@ import android.widget.TextView;
 
 import org.w3c.dom.Text;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -19,6 +21,10 @@ import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
     public Map<Button,Subscription> buttonToSub = new HashMap<Button, Subscription>();
+    public Map<String,Subscription> subMap = new HashMap<String,Subscription>();
+    public static final String MAP_MESSAGE = "subMap";
+    public static final String SUB_MESSAGE = "subName";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,7 +45,7 @@ public class MainActivity extends AppCompatActivity {
         Double totalCharges = subs.getTotalMonthlyCharges();
 
         TextView tCharge = new TextView(this);
-        tCharge.setText("Total Monthly Charge: $"+totalCharges.toString());
+        tCharge.setText("Total Monthly Charge: $"+totalCharges.toString()+"/month");
         tCharge.setLayoutParams(lpview1);
         linLayout.addView(tCharge);
 
@@ -47,10 +53,11 @@ public class MainActivity extends AppCompatActivity {
         int id = 0;
         for(Subscription sub : subs.subList){
             Button button = new Button(this);
-            button.setText(sub.getName()+": $"+sub.getMonthlyCharge().toString());
+            button.setText(sub.getName()+": $"+sub.getMonthlyCharge().toString()+"/month");
             button.setId(id);
             id++;
             buttonToSub.put(button,sub);
+            subMap.put(sub.getName(),sub);
             button.setLayoutParams(lpview2);
             button.setOnClickListener(new View.OnClickListener(){
                 public void onClick(View v){
@@ -67,6 +74,10 @@ public class MainActivity extends AppCompatActivity {
     public void goToDetails(View v){
         int id = v.getId();
         Button button = findViewById(id);
-
+        Subscription sub = this.buttonToSub.get(button);
+        Intent intent = new Intent(this,SubDetailsActivity.class);
+        intent.putExtra(SUB_MESSAGE,sub.getName());
+        intent.putExtra(MAP_MESSAGE, (Serializable) this.subMap);
+        startActivity(intent);
     }
 }

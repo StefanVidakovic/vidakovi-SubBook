@@ -1,8 +1,9 @@
 package vidakovi.vidakovi_subbook;
 
+import java.io.Serializable;
 import java.util.regex.*;
 
-class Subscription {
+class Subscription implements Serializable {
     private String name;
     private String startDate;
     private Double monthlyCharge;
